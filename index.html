@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>To Do List</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+  <body>
+    <div id="app">
+      <header class="py-5 bg-orange-light">
+        <img src="./assets/logo.svg" alt="" class="mx-auto" />
+      </header>
+      <main class="container pt-[60px] pb-[158px] h-[calc(100vh-100px)]">
+        <form id="form" class="flex" @submit.prevent="addElement">
+          <input
+            v-model="input"
+            id="input"
+            class="pl-9 py-4 rounded-l-full w-full outline-none bg-orange-light text-dark placeholder:text-gray-300 text-3.5xl font-normal leading-normal"
+            type="text"
+            placeholder="What do you need to do?"
+          />
+          <button
+            type="submit"
+            class="rounded-r-full px-6 text-gray-400 bg-blue font-semibold tracking-[1.9px] uppercase text-[38px] hover:bg-orange duration-300"
+          >
+            Add
+          </button>
+        </form>
+
+        <div
+          class="px-[50px] mt-10 bg-orange-light rounded-[50px] flex items-end flex-col gap-6"
+        >
+          <div class="tab_section w-full pb-4">
+            <div
+              class="plan_type_cont w-full flex justify-center gap-10 bg-orange-light"
+            >
+              <button
+                v-for="item in tabList"
+                :key="item"
+                class="plan__case__btn py-2 text-2xl px-6 mx-0 hover:bg-orange/80 transition-all hover:text-white duration-300"
+                :class="{'bg-orange text-white': item === activeTab}"
+                @click="activeTab = item"
+              >
+                {{ item }}
+              </button>
+            </div>
+
+            <div id="list-group-todo" class="w-full">
+              <div v-if="list.length === 0">
+                <h3 class="text-4xl mt-10 text-center">No data</h3>
+              </div>
+              <div v-else>
+                <div
+                  v-for="(item, index) in list" :key="index" 
+                  class="flex justify-between px-3 py-2"
+                >
+                  <label class="flex items-center gap-2">
+                    <button class="px-2 py-1 bg-green-600 text-white rounded-lg hover:bg-green-600/80 transition-colors duration-300">Complate</button>
+                    <span class="text-xl text-dark font-semibold">{{ item.title }} </span>
+                  </label>
+                  <button @click="deleteItem(index)" class="px-2 py-1 bg-red text-white rounded-lg hover:bg-red/80 transition-colors duration-300">{{item.status === 'removed' ? 'Delete' : "Remove"}}</button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <button
+            class="px-2.5 py-5 flex items-center gap-2.5 text-2xl font-normal leading-normal text-orange"
+          >
+            <span class="icon-clear"></span>
+            Clear Completed
+          </button>
+        </div>
+      </main>
+    </div>
+    <script src="./app.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          container: {
+            center: true,
+            padding: "16px",
+            screens: {
+              sm: "640px",
+              md: "768px",
+              lg: "1024px",
+              xl: "1072px",
+            },
+          },
+          extend: {
+            colors: {
+              orange: {
+                DEFAULT: "#D98326",
+                light: "#F1ECE6",
+              },
+              blue: "#76B7CD",
+              red: "#B30B04",
+              dark: "#323232",
+              gray: {
+                100: "#737373",
+                200: "#C2C2C2",
+                300: "#969696",
+                400: "#F3F3F3",
+              },
+            },
+            fontSize: {
+              "3.5xl": "32px",
+            },
+          },
+        },
+      };
+    </script>
+  </body>
+</html>
